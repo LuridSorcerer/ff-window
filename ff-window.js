@@ -79,10 +79,17 @@ charmap.set("%", {r:5,c:7});
 charmap.set("*", {r:5,c:8});
 charmap.set("&", {r:5,c:9});
 
-charmap.set("f_b", {r:6,c:0});
-charmap.set("f_tl", {r:6,c:1});
+charmap.set("f_p", {r:6,c:0}); // frame panel
+charmap.set("f_tl", {r:6,c:1}); // frame top left
+charmap.set("f_tr", {r:6,c:2}); // frame top right
+charmap.set("f_br", {r:6,c:3}); // frame bottom right
+charmap.set("f_bl", {r:6,c:4}); // frame bottom left
+charmap.set("f_l", {r:6,c:5}); // frame left
+charmap.set("f_t", {r:6,c:6}); // frame top
+charmap.set("f_r", {r:6,c:7}); // frame right
+charmap.set("f_b", {r:6,c:8}); // frame bottom
 
-export function ffwindow(...s) {
+export function ffwindow(s) {
     let w = document.createElement('canvas');
     w.width = 1000;
     w.height = 1000;
@@ -90,12 +97,40 @@ export function ffwindow(...s) {
 
     // render frame
     let htiles = 3;
-    let wtiles = 10;
+    let wtiles = s.length + 2;
     for (let i = 0; i < htiles; i++) {
         for (let j = 0; j < wtiles; j++) {
+
+            // select tile
+            let ch;
+            // check for four corners
+            if (i==0 && j==0) {
+                ch = charmap.get("f_tl");
+            } else if (i==0 && j==wtiles-1) { 
+                ch = charmap.get("f_tr");
+            } else if ( i==htiles-1 && j==0) {
+                ch = charmap.get("f_bl");
+            } else if ( i== htiles-1 && j==wtiles-1) {
+                ch = charmap.get("f_br")
+            }
+            // check for four sides
+            else if ( i==0 ) {
+                ch = charmap.get("f_t");
+            } else if ( i==htiles-1 ) {
+                ch = charmap.get("f_b"); 
+            } else if ( j==0 ) {
+                ch = charmap.get("f_l");
+            } else if ( j==wtiles-1 ) {
+                ch = charmap.get("f_r");
+            }
+            // background panel
+            else {
+                ch = charmap.get("f_p");
+            }
+            // render tile
             wctx.drawImage(
                 font, // source image
-                (charmap.get("f_b")).c*8, (charmap.get("f_b")).r*8, // source x,y
+                ch.c*8, ch.r*8, // source x,y
                 8, 8, // source w,h
                 j*8, i*8, // dest x,y
                 8, 8 // dest w,h
@@ -103,15 +138,13 @@ export function ffwindow(...s) {
         }
     }
 
-    // render text
-    let t = "Test string #1 with A FEW !?,. symbols!";
-
-    for (let i = 0; i < t.length; i++) {
+    // render string on top of the frame
+    for (let i = 0; i < s.length; i++) {
         wctx.drawImage(
             font, // source image
-            (charmap.get(t[i])).c*8, (charmap.get(t[i])).r*8, // source x,y
+            (charmap.get(s[i])).c*8, (charmap.get(s[i])).r*8, // source x,y
             8, 8, // source w,h
-            i*8, 0, // dest x,y
+            i*8+8, 0+8, // dest x,y
             8, 8 // dest w,h
         )
     }

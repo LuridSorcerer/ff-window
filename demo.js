@@ -17,7 +17,7 @@ function render() {
     ctx.fillStyle = "gray";
     ctx.fillRect(0,0,800,600);
     // draw image
-    i = ffwindow("Test.");
+    i = ffwindow("Thtring!? I guess so. $&%");
     ctx.drawImage(i, 100, 100);
 }
 
