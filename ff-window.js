@@ -1,3 +1,6 @@
+// TODO: Handle missing characters
+// TODO: Add multiline support
+
 let font = new Image;
 font.src = "Font.png";
 
