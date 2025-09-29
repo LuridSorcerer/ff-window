@@ -78,6 +78,11 @@ charmap.set("#", {r:5,c:6});
 charmap.set("%", {r:5,c:7});
 charmap.set("*", {r:5,c:8});
 charmap.set("&", {r:5,c:9});
+charmap.set("...", {r:5,c:10});
+charmap.set(":", {r:5,c:11});
+charmap.set(";", {r:5,c:12});
+charmap.set("'", {r:5,c:13});
+charmap.set("-", {r:5,c:14});
 
 charmap.set("f_p", {r:6,c:0}); // frame panel
 charmap.set("f_tl", {r:6,c:1}); // frame top left
